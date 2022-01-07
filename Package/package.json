@@ -1,0 +1,23 @@
+{
+  "name": "react-native-paginated-modal-picker",
+  "version": "1.0.2",
+  "description": "Simple React Native Modal Picker With Pagination!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedHalbas/react-native-paginated-modal-picker.git"
+  },
+  "author": "Ahmed Essam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AhmedHalbas/react-native-paginated-modal-picker/issues"
+  },
+  "homepage": "https://github.com/AhmedHalbas/react-native-paginated-modal-picker#readme",
+  "devDependencies": {
+    "react": "^17.0.2",
+    "react-native": "^0.66.4"
+  }
+}
