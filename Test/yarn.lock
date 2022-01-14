@@ -5305,10 +5305,6 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
-"react-native-awesome-modal-picker@file:.yalc/react-native-awesome-modal-picker":
-  "resolved" "file:.yalc/react-native-awesome-modal-picker"
-  "version" "1.0.0"
-
 "react-native-codegen@^0.0.7":
   "integrity" "sha512-dwNgR8zJ3ALr480QnAmpTiqvFo+rDtq6V5oCggKhYFlRjzOmVSFn3YD41u8ltvKS5G2nQ8gCs2vReFFnRGLYng=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.7.tgz"
@@ -5320,7 +5316,7 @@
 
 "react-native-paginated-modal-picker@file:.yalc/react-native-paginated-modal-picker":
   "resolved" "file:.yalc/react-native-paginated-modal-picker"
-  "version" "1.0.0"
+  "version" "1.0.2"
 
 "react-native@*", "react-native@0.66.4":
   "integrity" "sha512-9vx5dlSfQlKbbDtr8+xMon6qsmSu7jvjdXWZpEKh3XVKpUidbbODv7048gwVKX8YAel1egeR7hN8vzSeI6ssTw=="

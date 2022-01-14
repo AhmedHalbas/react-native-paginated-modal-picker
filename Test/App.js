@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import {
   View,
-  Dimensions, Text
+  Text
 } from 'react-native';
 import { PaginatedModalPicker } from 'react-native-paginated-modal-picker'
 import axios from 'axios';
-const { width, height } = Dimensions.get("window");
 
 export default function App() {
 
   const [users, setUsers] = useState({ data: [], pageNumber: 1, isLoading: false })
 
   const pages = 2
-  const [user, setSelectedValue] = useState({
+  const [selectedUser, setSelectedUser] = useState({
     name: '', id: '',
   })
 
@@ -45,7 +44,7 @@ export default function App() {
 
       <PaginatedModalPicker
         textInputStyle={{ paddingLeft: 5 }}
-        modalStyle={{ height: height * 0.4 }}
+        // modalStyle={{ height: height * 0.4 }}
         flatListStyle={{ padding: 6 }}
         listItemStyle={{ borderRadius: 5, borderColor: 'black', borderWidth: 0.4, marginTop: 20 }}
         listItemTextStyle={{ color: 'blue' }}
@@ -55,10 +54,13 @@ export default function App() {
         ListEmptyComponent={<Text>Empty Component</Text>}
         isWorking={true}
         data={users.data}
+        // modalType={'FullScreen'}
+        backDropOpacity={0.6}
         onSelect={(item) => {
-          setSelectedValue({ id: item.value, name: item.label });
+          setSelectedUser({ id: item.value, name: item.label });
 
         }}
+        value={selectedUser.name}
         onEndReached={() => pages > users.pageNumber && setUsers({ ...users, pageNumber: users.pageNumber + 1, isLoading: true })}
         isRequesting={users.isLoading}
         onEndReachedThreshold={0}

@@ -9,20 +9,18 @@ import {
     Text,
     Dimensions,
     TextInput,
-    StyleSheet
 } from 'react-native';
 const { width, height } = Dimensions.get("window");
 
-export default function PaginatedModalPicker({ isWorking = true, placeholder = 'Click Me!', data, onSelect, onEndReached, onEndReachedThreshold, isRequesting, textInputStyle, modalStyle, contentContainerStyle, flatListStyle, placeholderTextColor, listItemStyle, listItemTextStyle, ListEmptyComponent, isRequestingComponent }) {
+export default function PaginatedModalPicker({ value, modalType = 'Custom', isWorking = true, placeholder = 'Click Me!', data, onSelect, onEndReached, onEndReachedThreshold, isRequesting, textInputStyle, modalStyle, backDropOpacity, contentContainerStyle, flatListStyle, placeholderTextColor, listItemStyle, listItemTextStyle, ListEmptyComponent, isRequestingComponent }) {
 
     const [isVisible, setVisible] = useState(false);
     const [onScrollEnd, setOnScrollEnd] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('');
 
+    const isModalFullScreen = () => modalType == 'FullScreen';
 
     return (
         <View>
-
 
             <TouchableOpacity disabled={!isWorking} onPress={() => setVisible(true)} >
                 <View pointerEvents='none'>
@@ -31,7 +29,7 @@ export default function PaginatedModalPicker({ isWorking = true, placeholder = '
                         style={{ borderRadius: 10, borderWidth: 1, width: width * 0.8, height: height * 0.05, padding: 10, ...textInputStyle }}
                         editable={false}
                         placeholder={placeholder}
-                        value={selectedValue}
+                        value={value}
                         placeholderTextColor={placeholderTextColor}
                     />
                 </View>
@@ -43,12 +41,33 @@ export default function PaginatedModalPicker({ isWorking = true, placeholder = '
                 visible={isVisible}
             >
 
-                <TouchableOpacity activeOpacity={0} style={styles.modalContainer} onPress={() => setVisible(false)}>
+                <TouchableOpacity
+                    activeOpacity={0}
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'black',
+                        opacity: backDropOpacity ?? 0.65
+                    }}
+                    onPress={() => setVisible(false)}>
                     <TouchableOpacity activeOpacity={1} >
-                        <View style={{ borderRadius: 10, width: width * 0.8, height: height * 0.3, backgroundColor: 'white', alignSelf: 'center', ...modalStyle }}>
+                        <View style={{ backgroundColor: 'white', borderRadius: 10, paddingTop: isModalFullScreen() && Platform.OS == 'ios' ? height * 0.06 : 0, width: isModalFullScreen() ? width : width * 0.8, height: isModalFullScreen() ? height : height * 0.3, alignSelf: 'center', ...modalStyle }}>
                             <FlatList
+                                ListHeaderComponent={isModalFullScreen() && <TouchableOpacity
+                                    onPress={() => setVisible(false)}
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+
+                                    }}>
+                                    <Text style={{ fontSize: 20 }}>✕</Text>
+                                </TouchableOpacity>
+                                }
                                 style={{ padding: 10, ...flatListStyle }}
-                                contentContainerStyle={{ ...contentContainerStyle }}
+                                contentContainerStyle={{ paddingBottom: height * 0.05, ...contentContainerStyle }}
                                 ListEmptyComponent={
                                     ListEmptyComponent ??
                                     <View style={{ justifyContent: 'center', alignSelf: 'center', flex: 1 }}>
@@ -74,7 +93,6 @@ export default function PaginatedModalPicker({ isWorking = true, placeholder = '
                                                 setVisible(false)
                                                 const selectedObj = { value: data.item.value, label: data.item.label }
                                                 onSelect?.(selectedObj);
-                                                setSelectedValue(selectedObj.label)
 
                                             }
                                             }>
@@ -97,28 +115,8 @@ export default function PaginatedModalPicker({ isWorking = true, placeholder = '
                     </TouchableOpacity>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity
-                    activeOpacity={0}
-                    style={{ backgroundColor: 'black', flex: 1, opacity: 0.65 }}
-                    onPress={() => setVisible(false)}>
-                   
-                </TouchableOpacity> */}
-
             </Modal>
         </View>
     );
 
 }
-
-const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'black', opacity: 0.65
-    },
-    modal: {
-        width: 155,
-        height: 300
-    },
-});

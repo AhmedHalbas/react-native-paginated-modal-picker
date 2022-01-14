@@ -16,14 +16,15 @@
 npm i react-native-paginated-modal-picker
 ```
 
+https://user-images.githubusercontent.com/40437835/149576066-53a80ac5-c8a0-4192-91c0-7a2e4a2b171c.mov
+
 ## Basic Usage
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { View, Dimensions, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { PaginatedModalPicker } from 'react-native-paginated-modal-picker';
 import axios from 'axios';
-const { width, height } = Dimensions.get('window');
 
 export default function App() {
   const [users, setUsers] = useState({
@@ -33,7 +34,7 @@ export default function App() {
   });
 
   const pages = 2;
-  const [user, setSelectedValue] = useState({
+  const [selectedUser, setSelectedUser] = useState({
     name: '',
     id: '',
   });
@@ -68,7 +69,7 @@ export default function App() {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <PaginatedModalPicker
         textInputStyle={{ paddingLeft: 5 }}
-        modalStyle={{ height: height * 0.4 }}
+        // modalStyle={{ height: height * 0.4 }}
         flatListStyle={{ padding: 6 }}
         listItemStyle={{
           borderRadius: 5,
@@ -83,9 +84,12 @@ export default function App() {
         ListEmptyComponent={<Text>Empty Component</Text>}
         isWorking={true}
         data={users.data}
+        // modalType={'FullScreen'}
+        backDropOpacity={0.6}
         onSelect={(item) => {
-          setSelectedValue({ id: item.value, name: item.label });
+          setSelectedUser({ id: item.value, name: item.label });
         }}
+        value={selectedUser.name}
         onEndReached={() =>
           pages > users.pageNumber &&
           setUsers({
@@ -108,15 +112,17 @@ export default function App() {
 
 #### Basic Props
 
-| Prop                  | Default                  | Type                                                                                            | Description                                                          |
-| --------------------- | ------------------------ | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| data                  | `[{label:'', value:''}]` | `array`                                                                                         | an array pagination items                                            |
-| placeholder           | `Click Me!`              | `string`                                                                                        | place holder for textinput                                           |
-| isWorking             | `true`                   | `bool`                                                                                          | enable/disable textinput                                             |
-| isRequesting          | `false`                  | `bool`                                                                                          | shows flatlist footer component when requesting data with pagination |
-| onSelect              | ` `                      | `call back function`                                                                            | used to get the selected label and value                             |
-| onEndReached          | ` `                      | `function`                                                                                      | triggered when end of flatlist reached incase of pagination          |
-| onEndReachedThreshold | `number`                 | represents the number of screen lengths you should be from the bottom before it fires the event |
+| Prop                  | Default                  | Type                 | Description                                                                                     |
+| --------------------- | ------------------------ | -------------------- | ----------------------------------------------------------------------------------------------- |
+| data                  | `[{label:'', value:''}]` | `array`              | an array pagination items                                                                       |
+| placeholder           | `Click Me!`              | `string`             | place holder for textinput                                                                      |
+| isWorking             | `true`                   | `bool`               | enable/disable textinput                                                                        |
+| isRequesting          | `false`                  | `bool`               | shows flatlist footer component when requesting data with pagination                            |
+| onSelect              | ` `                      | `call back function` | used to get the selected label and value                                                        |
+| value                 | ` `                      | `string`             | value of text input after onSelect is fired                                                     |
+| modalType             | `Custom`                 | `string`             | when modalType is 'FullScreen' it become in fullscreen view                                     |
+| onEndReached          | ` `                      | `function`           | triggered when end of flatlist reached incase of pagination                                     |
+| onEndReachedThreshold | `number`                 | `number`             | represents the number of screen lengths you should be from the bottom before it fires the event |
 
 #### Basic Components
 
@@ -136,6 +142,7 @@ export default function App() {
 | placeholderTextColor  | ` `                                                                                                            | `hexadecimal` | placeholderTextColor               |
 | listItemStyle         | `{padding: 10}`                                                                                                | `style`       | style for each item in flatlist    |
 | listItemTextStyle     | `{fontSize: 16}`                                                                                               | `style`       | listItemTextStyle                  |
+| backDropOpacity       | `0.65`                                                                                                         | `number`      | backDropOpacity of modal           |
 
 ## Author
 
