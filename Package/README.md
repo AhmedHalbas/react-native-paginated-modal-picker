@@ -16,8 +16,6 @@
 npm i react-native-paginated-modal-picker
 ```
 
-https://user-images.githubusercontent.com/40437835/149576066-53a80ac5-c8a0-4192-91c0-7a2e4a2b171c.mov
-
 ## Basic Usage
 
 ```jsx
