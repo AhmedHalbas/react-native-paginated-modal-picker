@@ -1,3 +1,4 @@
 import PaginatedModalPicker from './Components/paginatedModalPicker'
+import PaginatedMultipleModalPicker from './Components/paginatedMultipleModalPicker'
 
-module.exports = { PaginatedModalPicker }
+module.exports = { PaginatedModalPicker, PaginatedMultipleModalPicker }

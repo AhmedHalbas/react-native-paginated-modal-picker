@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> Simple React Native Modal Picker With Pagination!
+> Single and Multiple React Native Modal Picker With Pagination!
 
 ## Install
 
@@ -16,16 +16,19 @@
 npm i react-native-paginated-modal-picker
 ```
 
-https://user-images.githubusercontent.com/40437835/149576066-53a80ac5-c8a0-4192-91c0-7a2e4a2b171c.mov
+https://user-images.githubusercontent.com/40437835/153620306-3d4b6ceb-ac96-40bd-80b6-2889281ef0ec.mov
 
-## Basic Usage
+## Single and Multi Picker Usage
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { PaginatedModalPicker } from 'react-native-paginated-modal-picker';
+import { View, Text, Dimensions, Image } from 'react-native';
+import {
+  PaginatedModalPicker,
+  PaginatedMultipleModalPicker,
+} from 'react-native-paginated-modal-picker';
 import axios from 'axios';
-
+const { width, height } = Dimensions.get('window');
 export default function App() {
   const [users, setUsers] = useState({
     data: [],
@@ -37,6 +40,11 @@ export default function App() {
   const [selectedUser, setSelectedUser] = useState({
     name: '',
     id: '',
+  });
+
+  const [selectedUsers, setSelectedUsers] = useState({
+    names: [],
+    ids: [],
   });
 
   const getCountriesData = async (page) => {
@@ -66,7 +74,8 @@ export default function App() {
   }, [users.pageNumber]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
       <PaginatedModalPicker
         textInputStyle={{ paddingLeft: 5 }}
         // modalStyle={{ height: height * 0.4 }}
@@ -79,7 +88,7 @@ export default function App() {
         }}
         listItemTextStyle={{ color: 'blue' }}
         placeholderTextColor='#9b9b9b'
-        placeholder={'Users'}
+        placeholder={'Select a User'}
         isRequestingComponent={<Text>Loading Component</Text>}
         ListEmptyComponent={<Text>Empty Component</Text>}
         isWorking={true}
@@ -101,6 +110,53 @@ export default function App() {
         isRequesting={users.isLoading}
         onEndReachedThreshold={0}
       />
+
+      <PaginatedMultipleModalPicker
+        textInputStyle={{ paddingLeft: 5 }}
+        // modalStyle={{ height: height * 0.4 }}
+        flatListStyle={{ padding: 6 }}
+        listItemStyle={{
+          borderRadius: 5,
+          borderColor: 'black',
+          borderWidth: 0.4,
+          marginTop: 20,
+        }}
+        listItemTextStyle={{ color: 'blue' }}
+        //new props start
+        saveButtonStyle={{ backgroundColor: '#1259a1' }}
+        saveButtonTitleStyle={{ fontSize: 17 }}
+        saveButtonTitle='Confirm'
+        selectedItemImageStyle={{ width: 13, height: 13 }}
+        selectedItemIconComponent={
+          <Image
+            source={require('./images/correct.png')}
+            style={{ height: 20, width: 20 }}
+          />
+        }
+        //new props end
+        placeholderTextColor='#9b9b9b'
+        placeholder={'Select Multiple Users'}
+        isRequestingComponent={<Text>Loading Component</Text>}
+        ListEmptyComponent={<Text>Empty Component</Text>}
+        isWorking={true}
+        data={users.data}
+        // modalType={'FullScreen'}
+        backDropOpacity={0.6}
+        onSelect={(item) => {
+          setSelectedUsers({ ids: item.values, names: item.labels });
+        }}
+        value={selectedUsers?.names?.toString()}
+        onEndReached={() =>
+          pages > users.pageNumber &&
+          setUsers({
+            ...users,
+            pageNumber: users.pageNumber + 1,
+            isLoading: true,
+          })
+        }
+        isRequesting={users.isLoading}
+        onEndReachedThreshold={0}
+      />
     </View>
   );
 }
@@ -108,9 +164,9 @@ export default function App() {
 
 ## Properties
 
-### Basic
+### Single Picker
 
-#### Basic Props
+#### Props
 
 | Prop                  | Default                  | Type                 | Description                                                                                     |
 | --------------------- | ------------------------ | -------------------- | ----------------------------------------------------------------------------------------------- |
@@ -124,14 +180,14 @@ export default function App() {
 | onEndReached          | ` `                      | `function`           | triggered when end of flatlist reached incase of pagination                                     |
 | onEndReachedThreshold | `number`                 | `number`             | represents the number of screen lengths you should be from the bottom before it fires the event |
 
-#### Basic Components
+#### Components
 
 | Components            | Description         |
 | --------------------- | ------------------- |
 | ListEmptyComponent    | ListEmptyComponent  |
 | isRequestingComponent | ListFooterComponent |
 
-#### Basic Styles
+#### Styles
 
 | Prop                  | Default                                                                                                        | Type          | Description                        |
 | --------------------- | -------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------- |
@@ -143,6 +199,28 @@ export default function App() {
 | listItemStyle         | `{padding: 10}`                                                                                                | `style`       | style for each item in flatlist    |
 | listItemTextStyle     | `{fontSize: 16}`                                                                                               | `style`       | listItemTextStyle                  |
 | backDropOpacity       | `0.65`                                                                                                         | `number`      | backDropOpacity of modal           |
+
+### Multi Picker ( Can use same Props, Components and Styles of Single Picker in addition to: )
+
+#### Props
+
+| Prop            | Default | Type     | Description          |
+| --------------- | ------- | -------- | -------------------- |
+| saveButtonTitle | `Save`  | `string` | title of save button |
+
+#### Styles
+
+| Prop                  | Default                                                                                                                                                                                                           | Type    | Description           |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------------- |
+| saveButtonStyle       | `{borderRadius: 30, minHeight: height * 0.04, width: width * 0.3, backgroundColor: 'black', justifyContent: "center", alignItems: 'center', alignSelf: "center", marginTop: 20, marginHorizontal: width * 0.015}` | `style` | saveButtonStyle       |
+| saveButtonTitleStyle  | `{color: "white", fontSize: width * 0.04}`                                                                                                                                                                        | `style` | saveButtonTitleStyle  |
+| selectedItemIconStyle | `{height: 15, width: 15, alignSelf: 'center'}`                                                                                                                                                                    | `style` | selectedItemIconStyle |
+
+#### Components
+
+| Components                | Description               |
+| ------------------------- | ------------------------- |
+| selectedItemIconComponent | selectedItemIconComponent |
 
 ## Author
 
