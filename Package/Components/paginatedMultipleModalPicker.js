@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Platform,
@@ -24,6 +24,13 @@ export default function PaginatedMultipleModalPicker({ value, modalType = 'Custo
 
     const isModalFullScreen = () => modalType == 'FullScreen';
 
+    useEffect(() => {
+
+        setDataItems(data)
+
+    }, [data])
+
+
     useUpdateEffect(() => {
 
         if (Array.isArray(value) && value.length) {
@@ -38,12 +45,6 @@ export default function PaginatedMultipleModalPicker({ value, modalType = 'Custo
         }
     }, [value])
 
-    useUpdateEffect(() => {
-
-
-        setDataItems(data)
-
-    }, [data])
 
     const selectItem = (id) => {
 
@@ -202,7 +203,7 @@ export default function PaginatedMultipleModalPicker({ value, modalType = 'Custo
                 </TouchableOpacity>
 
             </Modal>
-        </View >
+        </View>
     );
 
 }

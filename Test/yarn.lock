@@ -5316,7 +5316,7 @@
 
 "react-native-paginated-modal-picker@file:.yalc/react-native-paginated-modal-picker":
   "resolved" "file:.yalc/react-native-paginated-modal-picker"
-  "version" "1.0.2"
+  "version" "2.0.0"
 
 "react-native@*", "react-native@0.66.4":
   "integrity" "sha512-9vx5dlSfQlKbbDtr8+xMon6qsmSu7jvjdXWZpEKh3XVKpUidbbODv7048gwVKX8YAel1egeR7hN8vzSeI6ssTw=="
