@@ -14,3 +14,7 @@
 
 - Handle Initial Values in `data` prop in `PaginatedMultipleModalPicker`.
 - Improve Code Quality.
+
+### 2.0.2 (December 08, 2022)
+
+- Improve Package Code Quality.
